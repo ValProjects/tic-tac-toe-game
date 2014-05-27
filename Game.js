@@ -1,12 +1,12 @@
+'use strict';
 /** 
  * GameBoard Class
  **/
 var Board = (function(){
-  "use strict";
 	function Board (){
     // create container for game board
-		this.container = document.createElement("div");
-		this.container.setAttribute("id","gameBoard");
+		this.container = document.createElement('div');
+		this.container.setAttribute('id', 'gameBoard');
     this.cleanBoard = true;
     this.gameOver = false;
     document.body.appendChild(this.container);
@@ -16,13 +16,13 @@ var Board = (function(){
 		
     // create 19x19 game board
 		for (var i = 0; i < 19; i++){
-			this.row[i] = document.createElement("div");
-			this.row[i].setAttribute("id","row"+i);
-			this.row[i].setAttribute("class","row");
+			this.row[i] = document.createElement('div');
+			this.row[i].setAttribute('id', 'row' + i);
+			this.row[i].setAttribute('class', 'row');
 			this.container.appendChild(this.row[i]);
 
 			for (var j = 0 + 19 * i; j < 19 + 19 * i; j++){
-				this.cell[j] = new Cell(j,"row"+i,'cell');
+				this.cell[j] = new Cell(j, 'row' + i, 'cell');
 			}
 		}
     
@@ -48,9 +48,10 @@ var Board = (function(){
       
       var type = activeCell.markerType;
       var canvas = activeCell.canvas;
-      var cell = canvas.getContext("2d");
+      var cell = canvas.getContext('2d');
       
-      canvas.setAttribute("title", player[currentPlayer].name + "'s marker");
+      canvas.setAttribute('title', player[currentPlayer].name + '\'s marker');
+      debugger
       gameBoard.cleanBoard = false;
       
 			switch (type){
@@ -78,7 +79,7 @@ var Board = (function(){
     checkWin : function (activeCell, showAlert) {
       showAlert = typeof(showAlert) != 'undefined' ? showAlert : true;
       var markerType = activeCell.markerType;
-      var ctx = activeCell.canvas.getContext("2d");
+      var ctx = activeCell.canvas.getContext('2d');
       
       // check horizontal and vertical lines
       var horLine = 0; 
@@ -162,7 +163,6 @@ var Board = (function(){
  *   playerMarker - type of marker, which player put in cell.
  **/
 function Player(playerName, playerType, playerMarker){
-  "use strict";
 	this.name = playerName;
 	this.type = playerType;
 	this.marker = playerMarker;
@@ -172,16 +172,15 @@ function Player(playerName, playerType, playerMarker){
  * Cell Class
  **/
 var Cell = (function(){
-  "use strict";
 	function Cell(id, parent_id, classes){
 		// Get the new cells parent row DIV element from the DOM
-		var parent = document.querySelector("#"+parent_id);
+		var parent = document.querySelector('#' + parent_id);
 		
-		this.canvas = document.createElement("canvas"); // canvas for one of 19 game cells.
-		this.canvas.setAttribute("id",id); // set id for the cells canvas
-		this.canvas.setAttribute("width",20); // set width for the cells canvas
-		this.canvas.setAttribute("height",20); // set height for the cells canvas
-		this.canvas.setAttribute("class",typeof classes === 'string' ? classes : ''); // add any classes to the cells canvas
+		this.canvas = document.createElement('canvas'); // canvas for one of 19 game cells.
+		this.canvas.setAttribute('id',id); // set id for the cells canvas
+		this.canvas.setAttribute('width',20); // set width for the cells canvas
+		this.canvas.setAttribute('height',20); // set height for the cells canvas
+		this.canvas.setAttribute('class',typeof classes === 'string' ? classes : ''); // add any classes to the cells canvas
 		parent.appendChild(this.canvas); // Final display the new cell
 		
 		// Store passed parameters in corresponding object properties
@@ -191,14 +190,14 @@ var Cell = (function(){
     this.markerType = null; // type of marker    
       
 		// Add event listener to canvas
-		this.canvas.addEventListener("click",this,false);
+		this.canvas.addEventListener('click',this,false);
 	}
 	
 	// method of class Cell
 	Cell.prototype = {
 		handleEvent : function(e){
 			switch (e.type){
-				case "click" : 
+				case 'click' : 
 					if( this.owner === null ){
 						this.owner = currentPlayer;
             this.markerType = player[currentPlayer].marker;
@@ -214,7 +213,7 @@ var Cell = (function(){
 			}
 		},
     clearCell : function (){
-      var ctx = this.canvas.getContext("2d");
+      var ctx = this.canvas.getContext('2d');
       ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.owner = null; // Store which player owners this cell.
       this.markerType = null; // type of marker   
@@ -233,18 +232,17 @@ var currentPlayer = Players.first;
 var player = [];
 
 window.onload = function () {	
-  "use strict";
 	// Create new player
 	player = [
     new Player(
-      "The first player", 
+      'The first player', 
       Players.first, 
-      "cross"
+      'cross'
     ),
     new Player(
-      "The second player", 
+      'The second player', 
       Players.second, 
-      "circle"
+      'circle'
     )
   ];
 	
